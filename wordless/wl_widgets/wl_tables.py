@@ -463,6 +463,10 @@ class Wl_Table(QTableView):
             )
 
         if file_path:
+            if (match_file_extension:=re.search(r"\.[^)]+", file_type)) is not None:
+                file_extension = match_file_extension.group()
+                if not file_path.endswith(file_extension):
+                    file_path = file_path + file_extension
             dialog_progress = wl_dialogs_misc.Wl_Dialog_Progress(self.main, text = _tr('wl_tables', 'Exporting table...'))
 
             worker_exp_table = Wl_Worker_Exp_Table(
